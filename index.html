@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="sockettest.css">
+    <meta charset="utf-8" />
+    <title>Socket.io</title>
+  </head>
+
+  <body>
+    <h1>Communicating with socket .io!</h1>
+
+    <input type="text" id="yourname" class="form-control" placeholder="Your Name">
+
+    <button type="button" id="name-btn" >Set Name</button>
+    <p>
+    <input type="text" id="message" class="form-control" placeholder="message">
+    <input type="button" value="Send" id="send-btn" /></p>
+
+
+    <h2>Chat box</h2>
+    <div class="scrollabletextbox" id="chatBox"></div>
+
+
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="chatClient.js"></script>
+  </body>
+  </html>
