@@ -18,22 +18,22 @@ var server = http.createServer(function(req, res) {
   var ext = url.split('.').pop();
   console.log(url + "  :  " + ext);
   // convert file type to correct Content-Type
-  var memeType = 'html'; // default
+  var mimeType = 'html'; // default
   switch (ext) {
     case 'css':
-      memeType = 'css';
+      mimeType = 'css';
       break;
     case 'png':
-      memeType = 'png';
+      mimeType = 'png';
       break;
     case 'jpg':
-      memeType = 'jpeg';
+      mimeType = 'jpeg';
       break;
   }
   // Send the requested file
   fs.readFile('.' + url, 'utf-8', function(error, content) {
     res.writeHead(200, {
-      "Content-Type": "text/" + memeType
+      "Content-Type": "text/" + mimeType
     });
     res.end(content);
   });
