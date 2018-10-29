@@ -7,19 +7,23 @@
   </head>
 
   <body>
-    <h1>Communicating with socket .io!</h1>
-
+    <h1>Communicating with socket .io - A chat system!</h1>
+    <div id="register">
+    Enter a name to register:<br />
     <input type="text" id="yourname" class="form-control" placeholder="Your Name">
-
     <button type="button" id="name-btn" >Set Name</button>
+    </div>
+    <span id="user"></span>
+    <span id="members"></span>
     <p>
-    <input type="text" id="message" class="form-control" placeholder="message">
-    <input type="button" value="Send" id="send-btn" /></p>
 
 
     <h2>Chat box</h2>
     <div class="scrollabletextbox" id="chatBox"></div>
-
+    <span id="chatinput">
+    <textarea id="message" class="form-control" rows="1" cols="60" placeholder="message"></textarea><br />
+    <input type="button" value="Send" id="send-btn" /></p>
+    </span>
 
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>

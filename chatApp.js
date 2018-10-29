@@ -5,6 +5,10 @@
 var http = require('http');
 var fs = require('fs');
 
+//Everyone must use own port > 8000
+port=8463
+
+partners=[];
 // Loading the index file . html displayed to the client
 var server = http.createServer(function(req, res) {
   var url = req.url;
@@ -41,37 +45,38 @@ var io = require('socket.io').listen(server);
 
 // When a client connects, we note it in the console
 io.sockets.on('connection', function(socket) {
-  console.log('A client is connected!');
-  // watch for message from client (JSON)
-  socket.on('message', function(message) {
-    // Join message {operation: 'join', name: clientname}
-    if (message.operation == 'join') {
-      console.log('Client: ' + message.name + " joins");
-      // Send join message to all other clients
-      socket.broadcast.emit('message', {
-        operation: 'join',
-        name: message.name
-      });
-    }
-    // Message from client {operation: 'mess', name: clientname, test: message}
-    if (message.operation == 'mess') {
-      console.log('Message: ' + message.text);
-      // sent back out to everyone
-      socket.broadcast.emit('message', {
-        operation: 'mess',
-        name: message.name,
-        text: message.text
-      });
-      // send back to sender
-      socket.emit('message', {
-        operation: 'mess',
-        name: message.name,
-        text: message.text
-      });
-
-    }
-  });
-
+    console.log('A client is connected!');
+    // watch for message from client (JSON)
+    socket.on('message', function(message) {
+	// Join message {operation: 'join', name: clientname}
+	if (message.operation == 'join') {
+	    console.log('Client: ' + message.name + " joins");
+	    // Send join message to all other clients
+	    partners.push(message.name);
+	    io.emit('message', {
+		operation: 'join',
+		name: partners
+	    });
+	}
+	// Message from client {operation: 'mess', name: clientname, test: message}
+	if (message.operation == 'mess') {
+	    console.log('Message: ' + message.text);
+	    // sent back out to everyone
+	    socket.broadcast.emit('message', {
+		operation: 'mess',
+		name: message.name,
+		text: message.text
+	    });
+	    // send back to sender
+	    socket.emit('message', {
+		operation: 'mess',
+		name: message.name,
+		text: message.text
+	    });
+	    
+	}
+    });
 });
-//Everyone must use own port > 8000
-server.listen(8080);
+
+server.listen(port);
+console.log("Listening on port: "+port);
