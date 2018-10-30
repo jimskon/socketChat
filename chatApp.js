@@ -55,7 +55,22 @@ io.sockets.on('connection', function(socket) {
 	    partners.push(message.name);
 	    io.emit('message', {
 		operation: 'join',
-		name: partners
+		name: message.name,
+		partners: partners
+	    });
+	}
+	// Join message {operation: 'join', name: clientname}
+	if (message.operation == 'signout') {
+	    console.log('Client: ' + message.name + " leaves");
+	    // Send signout message to all other clients
+	    // Remove from partner list
+	    var index = partners.indexOf(message.name);
+	    if (index !== -1) partners.splice(index, 1);
+	    console.log("P:"+partners+":"+index);
+	    io.emit('message', {
+		operation: 'leave',
+		name: message.name,
+		partners: partners
 	    });
 	}
 	// Message from client {operation: 'mess', name: clientname, test: message}
