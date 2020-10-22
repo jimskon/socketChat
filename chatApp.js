@@ -5,8 +5,8 @@
 var http = require('http');
 var fs = require('fs');
 
-//Everyone must use own port > 8000
-port=8463
+//Everyone must use own port > 9000
+port=9001
 
 partners=[];
 // Loading the index file . html displayed to the client

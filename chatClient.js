@@ -2,8 +2,8 @@
 // Jim Skon 2018
 // Kenyon College
 // port must match  port of client and be >8000
-var port=8463;
-var socket = io.connect('http://cslab.kenyon.edu:'+port);
+var port=9001;
+var socket = io.connect('http://jimskon.com:'+port);
 var state="off";
 var myname="";
 // Watch for incomming messages from server (chatapp.js)
