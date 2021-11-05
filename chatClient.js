@@ -7,7 +7,6 @@ var socket = io.connect('http://jimskon.com:'+port);
 var state="off";
 var myname="";
 // Watch for incomming messages from server (chatapp.js)
-$(document).ready(function () {
     socket.on('message', function(message) {
 	// A join message: {operation: 'join', name: clientname}
 	if (message.operation == 'join') {
@@ -80,7 +79,6 @@ $(document).ready(function () {
     // Call function on page exit
     window.onbeforeunload = leaveSession;
     
-});
 
 //function called on submit or enter on text input
 function sendText() {
