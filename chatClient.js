@@ -18,70 +18,75 @@ $(document).ready(function () {
 	    var names=message.partners;
 	    console.log(names);
 	    var name=message.name;;
-	    $('#chatBox').html($('#chatBox').html() + "<font color='red'>User Joins: </font>" + name + "<br />");
+	    document.getElementById('chatBox').innerHTML +=
+		"<font color='red'>User Joins: </font>" + name + "<br />";
 	    var groupList="";
 	    for (var n in names) {
 		groupList+=names[n]+", ";
 	    }
 	    groupList=groupList.slice(0,-2);
-	    $('#members').html("<b>Chat Group:</b> "+"<font color='blue'>"+groupList+"</font>"); 
+	    document.getElementById('members').innerHTML =
+		"<b>Chat Group:</b> "+"<font color='blue'>"+groupList+"</font>"; 
 	}
 	if (message.operation == 'leave') {
 	    if (state=="off") {
 		return;
 	    }
 	    var name=message.name;
-	    $('#chatBox').html($('#chatBox').html() + name  + "<font color='red'>: has left the room.</font><br />");
+	    document.getElementById('chatBox').innerHTML + name  + "<font color='red'>: has left the room.</font><br />";
 	    var groupList="";
 	    for (var n in message.partners) {
 		groupList+=message.partners[n]+", ";
 	    }
 	    groupList=groupList.slice(0,-2);
-	    $('#members').html("<b>Chat Group:</b> "+"<font color='blue'>"+groupList+"</font>"); 
+	    document.getElementById('members').innerHTML = "<b>Chat Group:</b> "+"<font color='blue'>"+groupList+"</font>"; 
 	}
 	// A text message: {operation: 'mess', name: clientname, text: message}
 	if (message.operation == 'mess') {
 	    if (state=="off") {
 		return;
 	    }
-	    $('#chatBox').html($('#chatBox').html() + "<font color='red'>" + message.name + ": </font>" + message.text + "<br />");
+	    document.getElementById('chatBox').innerHTML +=
+		"<font color='red'>" + message.name + ": </font>" + message.text + "<br />";
 	}
-    })
-    $('#chatinput').hide();
-    $('#status').hide();
+	     })
+    document.getElementById('chatinput').style.display = 'none';
+    document.getElementById('status').style.display = 'none';
     // Action if they push the join button
-    $('#name-btn').click(function() {
-	myname = $('#yourname').val()
+    document.getElementById('name-btn').addEventListener("click", (e) => {
+	myname = document.getElementById('yourname').value;
 	state="on";
-	$('#register').hide();
-	$('#status').show();
-	$('#user').html("<b>Name:</b> <font color='blue'>"+myname+"</font>");
-	$('#chatinput').show();
+	document.getElementById('register').style.display = 'none';
+	document.getElementById('status').style.display = 'block';
+	document.getElementById('user').innerHTML =
+	    "<b>Name:</b> <font color='blue'>"+myname+"</font>";
+	document.getElementById('chatinput').style.display = 'block';
 	// Action if they push the send message button or enter
 	socket.emit('message', {
 	    operation: "join",
 	    name: myname
 	});
     })
-    $('#leave').click(leaveSession);
+    document.getElementById('leave').addEventListener("click", leaveSession);
+    document.getElementById('send-btn').addEventListener("click", sendText);
 
-    $('#send-btn').click(sendText);
-    $('#message').keyup(function (e){
-	var key=e.which;
-	if (key == 13) {
+    // Watch for enter on message box
+    document.getElementById('message').addEventListener("keydown", (e)=> {
+	if (e.code == "Enter") {
 	    sendText();
-    }   
+	}   
     });
     
     // Call function on page exit
-    $(window).unload(leaveSession);
+    window.onbeforeunload = leaveSession;
     
 });
 
 //function called on submit or enter on text input
 function sendText() {
-    var message = $('#message').val();
-    $('#message').val("");
+    var message = document.getElementById('message').value;
+    document.getElementById('message').value = "";
+    
     socket.emit('message', {
 	operation: "mess",
 	name: myname,
@@ -95,11 +100,12 @@ function leaveSession(){
 	operation: "signout",
 	name: myname,
     });
-    $('#yourname').val("");
-    $('#register').show();
-    $('#user').html("");
-    $('#chatinput').hide();
-    $('#status').hide();
+    document.getElementById('yourname').value = "";
+    document.getElementById('register').style.display = 'block';
+    document.getElementById('user').innerHTML = "";
+    document.getElementById('chatinput').style.display = 'none';
+    document.getElementById('status').style.display = 'none';
+
 }
 
 
