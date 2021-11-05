@@ -2,7 +2,11 @@
 // Jim Skon, 2018
 // Kenyon College
 // Run: node chatApp.js
-var http = require('http');
+const express = require('express');
+const app = express();
+const http = require('http');
+//const server = http.createServer(app)
+
 var fs = require('fs');
 
 //Everyone must use own port > 9000
@@ -41,7 +45,9 @@ var server = http.createServer(function(req, res) {
 
 console.log("Loaded index file");
 // Loading socket.io
-var io = require('socket.io').listen(server);
+const { Server } = require("socket.io");
+const io = new Server(server);
+//var io = require('socket.io').listen(server);
 
 // When a client connects, we note it in the console
 io.sockets.on('connection', function(socket) {
