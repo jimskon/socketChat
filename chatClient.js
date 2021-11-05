@@ -31,7 +31,7 @@ $(document).ready(function () {
 		return;
 	    }
 	    var name=message.name;
-	    $('#chatBox').html($('#chatBox').html() + "<font color='red'>User leaves: </font>" + name + "<br />");
+	    $('#chatBox').html($('#chatBox').html() + name  + "<font color='red'>: has left the room.</font><br />");
 	    var groupList="";
 	    for (var n in message.partners) {
 		groupList+=message.partners[n]+", ";
