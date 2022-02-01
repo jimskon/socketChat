@@ -1,5 +1,5 @@
 // Simple Web chat client
-// Jim Skon 2021
+// Jim Skon 2021/2022
 // Kenyon College
 // port must match  port of client and be >8000
 var port=9001;
